@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>ترتيب الأصوات</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+body{
+    background-image: url("image/background2.jpeg");
+    background-size:  100% 100%;      /* تغطي الشاشة */
+    background-position: center; /* بالمنتصف */
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    font-family: 'Lateef', serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+/*    color: #9a4a1b;   */
+h1{
+    margin-top: 90px;
+    margin-bottom: 0;
+    color: rgb(119, 2, 169);
+    font-size: 33px;
+    display: inline-block;          /* عشان الإطار يلف على النص */
+    padding: 9px 20px;             /* مسافة داخلية */
+    border: 3px dashed rgba(119, 2, 169, 0.605);     /* نفس إطار المربعات */
+    border-radius: 15px;            /* زوايا ناعمة */
+    background-color: rgb(253, 253, 241);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+
+.game-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    gap: 140px;
+}
+
+/* صورة الكلمة */
+.word-image img{
+    width: 210px;
+    border: 3px dashed rgba(119, 2, 169, 0.605);
+    border-radius: 20px;
+    padding: 5px;                 /* مسافة بين الصورة والإطار */
+    background-color: rgb(253, 253, 241);      
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* منطقة اللعبة */
+.letters-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* المربعات الفارغة */
+.slots{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.slot{
+    width: 70px;
+    height: 70px;
+    border: 3px dashed rgba(119, 2, 169, 0.605);
+    border-radius: 12px;
+    font-size: 36px;
+    line-height: 60px;
+    background-color: rgb(253, 253, 241);
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+
+}
+
+.slot.correct{
+    background-color: #81C784;
+    color: white;
+    border-color: #39963c;
+}
+
+.slot.wrong{
+    background-color: #E57373;
+    color: white;
+    border-color: #b62929;
+}
+
+/* الحروف بالأسفل */
+.choices{
+    display: flex;
+    gap: 13px;
+    color: #FFF;
+}
+
+.choice{
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: rgb(119, 2, 169);
+    font-size: 32px;
+    line-height: 55px;
+    cursor: pointer;
+}
+
+#backArrow {
+    position: fixed;      /* تثبيت بالمكان */
+    top: 20px;            /* من الأعلى */
+    left: 20px; 
+	margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;           /* حجم الدائرة */
+    height: 50px;
+    background-color: rgb(119, 2, 169); /* لون الدائرة */
+    color: white;             /* لون السهم */
+    border-radius: 50%;       /* يخليها دائرة */
+    text-decoration: none;    /* إزالة الخط تحت النص */
+    font-size: 27px;          /* حجم السهم */
+    font-weight: bold;
+	line-height: 1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* لمسة ظل */
+    transition: transform 0.2s;
+}
+
+#backArrow:hover {
+    transform: scale(1.2);    /* يكبر عند المرور */
+    cursor: pointer;
+}
+.stars{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 32px;
+}
+
+.star::before{
+  content: "☆";        /* نجمة فارغة */
+  color: #ccc;
+}
+
+.star.on::before{
+  content: "★";        /* نجمة ممتلئة */
+  color: #f59e0b;      /* ذهبي */
+}
+.result-modal{
+  max-width: 320px;   /* صغري أو كبري حسب ذوقك */
+}
+
+.modal-content{
+  border-radius: 20px; /* اختياري: زوايا ناعمة */
+}
+</style>
+</head>
+
+<body>
+    <section id="topScreen">
+        <a href="play.html" id="backArrow">&#8592;</a>
+        </section>
+
+<h1>رتب الأصوات لتحصل على الكلمة الصحيحة</h1>
+
+<div class="game-box">
+
+    <div class="letters-area">
+        <div class="slots" id="slots"></div>
+        <div class="choices" id="choices"></div>
+    </div>
+
+    <div class="word-image">
+        <img id="wordImg" src="">
+    </div>
+</div>
+<!-- شاشة النهاية -->
+
+<audio id="correctSound" src="assets/audio/fusha/correct2.mp4"></audio>
+<audio id="wrongSound" src="assets/audio/fusha/wrong.mpeg"></audio>
+<audio id="wordSound"></audio>
+
+
+<script>
+
+const correctSound = document.getElementById("correctSound");
+const wrongSound   = document.getElementById("wrongSound");
+const wordSound    = document.getElementById("wordSound");
+
+const words = [
+    { text: "أمي", img: "image/mother.jpg", sound: "assets/audio/fusha/mother.mpeg" },
+    { text: "جدتي", img: "image/grandma.jpg", sound: "assets/audio/fusha/grandma.mpeg" },
+    { text: "أخي", img: "image/brother.jpg", sound: "assets/audio/fusha/brother.mp4" },
+    { text: "أختي", img: "image/sister.jpg", sound: "assets/audio/fusha/sister.mpeg" }
+];
+
+let currentWordIndex = 0;
+let currentLetterIndex = 0;
+let completedWords = 0;
+
+
+const slotsDiv = document.getElementById("slots");
+const choicesDiv = document.getElementById("choices");
+const wordImg = document.getElementById("wordImg");
+
+function shuffle(arr){
+    return arr.sort(() => Math.random() - 0.5);
+}
+
+function loadWord(){
+    slotsDiv.innerHTML = "";
+    choicesDiv.innerHTML = "";
+    currentLetterIndex = 0;
+
+    const word = words[currentWordIndex].text;
+    wordImg.src = words[currentWordIndex].img;
+
+    // إنشاء المربعات
+    for(let i=0;i<word.length;i++){
+        const slot = document.createElement("div");
+        slot.className = "slot";
+        slotsDiv.appendChild(slot);
+    }
+
+    // خلط الحروف
+    const letters = shuffle(word.split(""));
+
+    letters.forEach(letter=>{
+        const btn = document.createElement("div");
+        btn.className = "choice";
+        btn.textContent = letter;
+
+        btn.onclick = () => {
+    const currentSlot = slotsDiv.children[currentLetterIndex];
+
+    // إذا الحرف صحيح
+    if (letter === word[currentLetterIndex]) {
+
+        // تشغيل صوت correct
+        correctSound.currentTime = 0;
+        correctSound.play();
+
+        currentSlot.textContent = letter;
+        currentSlot.classList.add("correct");
+        currentLetterIndex++;
+
+        // ✅ إذا كان هذا آخر حرف
+        if (currentLetterIndex === word.length) {
+            completedWords++;
+
+            // ⛔ منع الضغط أثناء الأصوات
+            choicesDiv.style.pointerEvents = "none";
+
+            // ننتظر انتهاء صوت correct
+            const correctDuration = correctSound.duration * 1000;
+
+            setTimeout(() => {
+                // تشغيل نطق الكلمة
+                wordSound.src = words[currentWordIndex].sound;
+                wordSound.currentTime = 0;
+                wordSound.play();
+
+                // بعد انتهاء نطق الكلمة
+                wordSound.onended = () => {
+                    choicesDiv.style.pointerEvents = "auto";
+
+                    if (completedWords === words.length) {
+                        showResultModal(4, restartGame);
+
+                    } else {
+                        currentWordIndex++;
+                        loadWord();
+                    }
+                };
+
+            }, correctDuration);
+        }
+
+    } 
+    // إذا الحرف خطأ
+    else {
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+
+        currentSlot.classList.add("wrong");
+        setTimeout(() => {
+            currentSlot.classList.remove("wrong");
+        }, 500);
+    }
+};
+
+
+        choicesDiv.appendChild(btn);
+    });
+}
+
+loadWord();
+function restartGame(){
+    currentWordIndex = 0;
+    currentLetterIndex = 0;
+    completedWords = 0;
+    loadWord();
+}
+
+</script>
+
+<div class="modal fade" id="resultModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered result-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-restart" data-bs-dismiss="modal">
+          إعادة اللعب
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="common.js"></script>
+
+
+
+</body>
+</html>

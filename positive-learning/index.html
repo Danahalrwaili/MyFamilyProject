@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>استمع إلى قصتي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<section id="topScreen">
+  <a href="../index.html" id="backArrow">&#8592;</a>
+</section>
+
+<div class="flipbook">
+
+  <!-- الغلاف -->
+  <div class="hard cover">استمع الى قصتي <small>~ ابدأ ~</small></div>
+
+  <!-- صفحة يمين فاضية -->
+  <div class="empty"></div>
+
+  <!-- صفحة يسار (محتوى) -->
+  <div class="page">
+    <img src="images/myfamily.jpg" />
+    <small>هَذِهِ أُسْرَتي</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/father.jpg" />
+    <small>هَذا هُوَ أبي عُمَرُ</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/mother.jpg" />
+    <small>هَذِهِ هِيَ أُمّي ريمُ</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/grandpa.jpg" />
+    <small>هَذا هُوَ جَدّي حَيْدَرُ</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/grandma.jpg" />
+    <small>هَذِهِ هِيَ جَدَّتي مَيُّ</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/brother.jpg" />
+    <small>هَذا هُوَ أَخي صَخْرٌ</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/sister.jpg" />
+    <small>هَذِهِ هِيَ أُخْتي زَيْنُ</small>
+  </div>
+
+  <div class="empty"></div>
+  <div class="page">
+    <img src="images/me.jpg" />
+    <small>هَذا أنا، إِسْمي وَرْدُ</small>
+  </div>
+
+  <!-- الغلاف الخلفي -->
+  <div class="hard cover"><small>.. شكرًا لك</small></div>
+
+</div>
+
+
+<!-- عنصر الصوت (مكانه هنا 👌) -->
+<audio id="pageAudio"></audio>
+
+<!-- سكربتات -->
+<script src="jquery.js"></script>
+<script src="turn.js"></script>
+
+<script>
+  const audio = document.getElementById("pageAudio");
+
+  const pageAudios = {
+    2: "audio/myFamily.mpeg",
+    4: "audio/father.mpeg",
+    6: "audio/mother.mpeg",
+    8: "audio/grandpa.mpeg",
+    10: "audio/grandma.mpeg",
+    12: "audio/brother.mpeg",
+    14: "audio/sister.mpeg",
+    16: "audio/me.mpeg"
+
+
+  };
+
+  $(".flipbook").turn({
+    width: 800,
+    height: 500,
+    autoCenter: true,
+    direction: 'rtl',
+
+    when: {
+      turned: function (event, page) {
+        audio.pause();
+        audio.currentTime = 0;
+
+        if (pageAudios[page]) {
+          audio.src = pageAudios[page];
+          audio.play().catch(() => {});
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

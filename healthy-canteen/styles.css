@@ -1,0 +1,153 @@
+body[dir="rtl"]{
+  font-family: 'Lateef', serif;
+  background-image: url("image/backgroundLetters.jpeg");
+  background-size: 100% 100%;      /* تغطي الشاشة */
+  background-position: center; /* بالمنتصف */
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+.option-btn{
+  color: rgb(253, 253, 180);
+  font-size: 40px;
+}
+#g1-word{
+  position: relative;
+  top: -95px;
+}
+
+#g1-options{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 240px; /* مسافة بين الأزرار */
+  justify-content: center; /* توسيط الأزرار */
+  margin-top: -50px; 
+}
+
+.option-btn:hover{
+  color: black;
+  text-shadow: 0 7px 3px rgba(0,0,0,0.2); /* لمسة ظل */
+}
+
+.option-btn.correct{
+  color: green;
+  text-shadow: 0 7px 3px rgba(0,0,0,0.2); /* لمسة ظل */
+}
+
+.option-btn.wrong{
+  color: red;
+  text-shadow: 0 7px 3px rgba(0,0,0,0.2); /* لمسة ظل */
+}
+.option-btn:focus,
+.option-btn:active {
+  outline: none !important;    /* إزالة أي إطار افتراضي */
+  box-shadow: none !important; /* إزالة أي ظل افتراضي من Bootstrap */
+}
+
+
+.progress-small{
+  height:.7rem;
+  border-radius:999px;
+  overflow:hidden;
+  background:#e5e7eb;
+}
+
+.progress-small .bar{
+  height:100%;
+  background:linear-gradient(90deg,rgb(199, 89, 5),#34d399);
+  width:0%;
+}
+
+.image-box img{
+  margin-top: 80px;
+  margin-right: 60%;
+  width: 230px;        /* نفس الارتفاع */
+  height: 230px;
+  border: 3px dashed rgba(106, 108, 248, 0.53) !important;
+  border-radius: 20px;
+  padding: 5px;                 /* مسافة بين الصورة والإطار */
+  background-color: rgb(255, 255, 222);      
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: none;
+  object-fit: cover;
+}
+
+.question-box{
+  margin-top: 90px;
+  margin-left: 220px;
+  padding:0;
+  border:0;
+  background: transparent;
+  font-size:2.1rem;
+  font-weight:600;
+}
+
+.game-layout {
+    display: flex;
+    align-items: center;      /* عمودي */
+    justify-content: center;  /* بالوسط */
+    gap:0;                /* مسافة بين السؤال والصورة */
+}
+
+#backArrow {
+    position: fixed;      /* تثبيت بالمكان */
+    top: 20px;            /* من الأعلى */
+    left: 20px; 
+	  margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;           /* حجم الدائرة */
+    height: 50px;
+    background-color: rgb(199, 89, 5); /* لون الدائرة */
+    color: white;             /* لون السهم */
+    border-radius: 50%;       /* يخليها دائرة */
+    text-decoration: none;    /* إزالة الخط تحت النص */
+    font-size: 27px;          /* حجم السهم */
+    font-weight: bold;
+	  line-height: 1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* لمسة ظل */
+    transition: transform 0.2s;
+}
+
+#backArrow:hover {
+    transform: scale(1.2);    /* يكبر عند المرور */
+    cursor: pointer;
+}
+.stars{
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 32px;
+}
+
+.star::before{
+  content: "☆";        /* نجمة فارغة */
+  color: #ccc;
+}
+
+.star.on::before{
+  content: "★";        /* نجمة ممتلئة */
+  color: #f59e0b;      /* ذهبي */
+}
+.result-modal{
+  max-width: 320px;   /* صغري أو كبري حسب ذوقك */
+}
+
+.modal-content{
+  border-radius: 20px; /* اختياري: زوايا ناعمة */
+}
+/* إزالة الإطار الأسود نهائيًا */
+/* كنس أي Focus Ring من المتصفح */
+button,
+button:focus,
+button:active,
+button:focus-visible,
+.btn,
+.btn:focus,
+.btn:active,
+.btn:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}

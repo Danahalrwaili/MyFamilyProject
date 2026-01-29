@@ -1,0 +1,287 @@
+/*
+Created by Catherine Rodriquez
+*/
+
+
+/* makes all screens the same font */
+#wordboard {
+    direction: rtl;
+	
+}
+body{
+	background-image: url("image/backgroundWordsearch.jpeg");
+    background-size: 100% 100%;      /* تغطي الشاشة */
+    background-position: center; /* بالمنتصف */
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+* {
+	font-family: 'Lateef', serif;
+    padding: 0;
+    margin: 0;
+}
+h2 {
+	text-align: right;
+	margin-right: 210px;
+	margin-top: 30px;
+    font-size: 30px;
+    color: #e8b041;
+}
+
+/* display for exit button */
+#return{
+    padding: 5px;
+    text-align: left;
+    background-color: lightgrey;
+    border-radius: 8px;
+	font-size: 16px;
+	font-weight: bold;
+    margin-left: 1%;
+    margin-top: 1%;
+}
+
+#wordTheme, #solveButton, #newGameButton, .listWord, #challenge {
+
+	padding: 2px;
+    text-align: center;
+
+}
+.cell, #wordTheme, #wordlist {
+
+	background-color: rgb(255, 255, 255);
+}
+/* allows the hover effect on the buttons*/
+
+/* border around word search theme box*/
+#wordTheme {
+	border-radius: 8px;
+}
+
+/* border around game info box*/
+#gameInfo {
+    border-radius: 10px
+}
+
+/* display location of word search table*/
+#wordboard {
+	
+	margin-top: 43px;
+	margin-left: 324px;
+	border: 5px #6f4c35 solid;
+	display: table;
+	min-width: 390px;
+	min-height: 170px;
+	font-weight: bold;
+	color: #2d9127 ;
+	border-radius: 6px;
+
+
+}
+
+.boardRow {
+
+	display: table-row;
+
+}
+
+/* info on how the table is displayed on screen for word search*/
+.cell {
+
+	margin: 0 auto;
+	border: none;
+	display: table-cell;
+	height:65px;
+	width: 78px;
+	color: #e8b041;
+	font-size: 33px;
+	padding: 0;
+	outline: 0;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* لمسة ظل */
+
+
+	/*ensures text can't be accidentally selected*/
+	cursor: default; 
+    -webkit-touch-callout: none; 
+
+}
+
+/* mouse color on table*/
+.cell:hover {
+
+	background-color: rgb(189, 188, 188);
+
+}
+
+/* mouse color on table to show directions that can be taken for word search*/
+.cell.selectable {
+
+	background-color: rgb(211, 211, 211);
+
+}
+
+/* mouse color on table to show the letters user is selecting for word search*/
+.cell.selected { 
+
+	background-color: rgb(166, 165, 165);
+
+}
+
+/* change in display of found words on board*/
+.cell.found {
+
+	background-color:  rgb(177, 227, 182);
+	border: 1px #2d9127 solid;
+	font-weight: bold;
+	
+
+}
+
+/* change in display of words given through word search answer reveal*/
+.lost {
+    background-color: rgb(177, 227, 182);
+    border: 1px #2d9127 solid;
+	font-weight: bold;
+
+}
+
+/* display of AI found words on word board*/
+.AI {
+    background-color: rgb(177, 227, 182);
+    border: 1px #2d9127 solid;
+	font-weight: bold;
+
+}
+
+
+/* word list box display info*/
+#wordlist { 
+	background: none;
+	margin-top: 177px;
+	margin-left: 240px;
+	color: #e8b041;
+	display: table;
+	min-width: 90px;
+	font-size: 37px;
+	text-align: center;
+	
+}
+
+.listRow {
+
+	display: table-row;
+}
+
+.listWord {
+
+	display: table-cell;
+	padding-bottom:20px;
+
+	
+}
+
+/* crosses off words as they are found*/
+.listWord.found {
+
+	color:  #e8b041;
+	text-decoration: line-through;
+
+	
+}
+
+/* crosses off words as they are found*/
+.listWord.User {
+
+	color: #e8b041;
+	text-decoration: line-through;
+
+	
+}
+
+/* crosses off words as they are found*/
+.listWord.crossAI {
+
+	color: pink;
+	text-decoration: line-through;
+	
+}
+
+/* used to space the exit button and timer*/
+#topScreen{
+    display:inline-block;
+    justify-content:space-between;
+    display: flex; 
+}
+
+/* timer info for display*/
+#Timer {
+    border: 2px #34ab2e solid;
+	border-radius: 8px;
+    background-color: white;
+    font-size: 18px;
+	font-weight: bold;
+    margin-right: 1em;
+    margin-top: 1em;
+    padding: 5px;
+    text-align: center;
+}
+
+/* New Game, Race the Clock, and Reveal Answers button info*/
+#newGameButton {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    background-color: #906244; /* برتقالي */
+    border-radius: 50%;        /* دائرة */
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    top: 70%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+/* أيقونة السهم */
+#newGameButton i {
+    color: white;
+    font-size: 23px;
+}
+
+
+/* used to hide displays -> keep at bottom*/
+.hide {
+    display: none;
+}
+.game-container {
+    display: flex;
+    justify-content: center;   /* بالوسط */
+    align-items: flex-start;
+    margin-top: 30px;
+
+
+}
+#backArrow {
+	margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;           /* حجم الدائرة */
+    height: 50px;
+    background-color: #906244; /* لون الدائرة */
+    color: white;             /* لون السهم */
+    border-radius: 50%;       /* يخليها دائرة */
+    text-decoration: none;    /* إزالة الخط تحت النص */
+    font-size: 27px;          /* حجم السهم */
+    font-weight: bold;
+	line-height: 1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* لمسة ظل */
+    transition: transform 0.2s;
+}
+
+#backArrow:hover {
+    transform: scale(1.2);    /* يكبر عند المرور */
+    cursor: pointer;
+}

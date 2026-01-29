@@ -1,0 +1,18 @@
+{
+  "clips": {
+    "grandpa": "grandpa.mpeg",
+    "sister": "sister.mpeg",
+    "father": "father.mpeg",
+    "brother": "brother.mpeg",
+    "family": "family.mpeg",
+
+    "click": "click.mpeg",
+    "correct": "correct.mpeg",
+    "wrong": "wrong.mpeg",
+    "applause": "applause.mpeg",
+
+    "prompt_letters_pos": "prompt_letters_pos.mpeg",
+    "good_job": "good_job.mpeg",
+    "try_again": "try_again.mpeg"
+  }
+}
